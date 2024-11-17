@@ -1,0 +1,156 @@
+/* Using this file */
+/* styles/main.css */
+
+body {
+    margin: 0;
+    padding: 0 10%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* General styles for header, search, photo grid, and pagination */
+#header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#header h1 {
+    margin: 0;
+    padding: 10px;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: Arial;
+}
+
+#search {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+
+#photo-div {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    width: 100%;
+}
+
+.image-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.zoom-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.image-wrapper:hover .zoom-image {
+    transform: scale(1.25);
+    z-index: 1;
+}
+
+h1:hover {
+    cursor: pointer;
+}
+
+#pagination {
+    margin-top: 20px;
+    inline-size: 100%;
+    overflow-wrap: break-word;
+}
+
+#pagination a, a:active, a:visited {
+    margin: 0 10px; /* Adjust the space as needed */
+    text-decoration: none;
+    color: black; 
+    font-size: 24px;
+    font-family: Arial;
+}
+
+#pagination a:hover {
+    color: gray;
+}
+
+/* Placeholder styles */
+.placeholder {
+    visibility: hidden;
+}
+
+
+/* Modal styles */
+.modal {
+    transition: opacity 0.25s ease;
+}
+body.modal-active {
+    overflow-x: hidden;
+    overflow-y: visible !important;
+}
+.fixed-size {
+    width: 700px; /* Set your fixed width here */
+    height: 500px; /* Set your fixed height here */
+    object-fit: cover; /* Use cover, contain, or another value depending on the desired behavior */
+}
+
+/* Media queries for responsive design */
+@media (min-width: 768px) {
+    #header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    #photo-div {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    #header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 40px;
+        width: 100%;
+    }
+
+    #photo-div {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (min-width: 1440px) {
+    #header {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 60px;
+        width: 100%;
+    }
+
+    #photo-div {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}

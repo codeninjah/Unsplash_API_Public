@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsplash API</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header id="header">    
+        <h1>Unsplash image search</h1>
+        <input type="text" id="search" placeholder="Search"></input>
+    </header>
+
+    <!-- The container where all pictures are displayed -->
+    <div id="photo-div"></div>
+
+    <!-- Modal -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden modal">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-1/2">
+            <h2 class="text-2xl font-bold mb-4">Modal Title</h2>
+            <img id="modalImage" src="" alt="Modal Image" class="fixed-size mb-4">
+            <div class="flex justify-end">
+                <button id="closeModal" class="bg-red-500 text-white px-4 py-2 rounded">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    <div id="pagination"></div>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
