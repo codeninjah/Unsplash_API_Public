@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unsplash API</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="./styles/main.css">
 </head>
 <body>
     <header id="header">    
@@ -30,6 +30,17 @@
     <!-- Pagination -->
     <div id="pagination"></div>
 
-    <script src="scripts/script.js"></script>
+    <script>
+        async function fetchApiKey() {
+            const response = await fetch('/api/getApiKey');
+            const data = await response.json();
+            window.apiKey = data.apiKey;  // Store API Key in global object
+            //document.getElementById('loadingMessage').style.display = 'none';  // Hide loading message
+            //document.getElementById('getApiKeyBtn').style.display = 'inline';  // Show button
+            return window.apiKey;
+        }
+        fetchApiKey();
+    </script>
+    <script src="./scripts/script.js"></script>
 </body>
 </html>

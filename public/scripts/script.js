@@ -12,16 +12,16 @@ header.addEventListener("click", () => {
 })
 
 
-//UNSPLASH API KEY
-var UNSPLASH_ACCESS_KEY = "Your API key here"; //It won't work without because the Unsplash API requires you to register for a API key
-
-const headers = new Headers({
-    'Authorization': `Client-ID ${UNSPLASH_ACCESS_KEY}`
-});
-
-
 // Function to get a random photo
 async function getPhoto(){
+
+    // Ensure the API key is fetched and available
+    await fetchApiKey();
+
+    const headers = new Headers({
+        'Authorization': `Client-ID ${window.apiKey}`
+    });
+
 
     photoDiv.innerHTML = " ";
     pagination.innerHTML = " ";
@@ -50,6 +50,13 @@ async function getPhoto(){
 
 // Den här är gammalt kod som jag experimenterat med
 async function searchPhotos(pageNr, query) {    
+
+        // Ensure the API key is fetched and available
+        await fetchApiKey();
+
+        const headers = new Headers({
+            'Authorization': `Client-ID ${window.apiKey}`
+        });
 
     photoDiv.innerHTML = "";
 
@@ -94,6 +101,13 @@ async function searchPhotos(pageNr, query) {
 
 
 async function searchPerPage(pageNr, query) {
+        // Ensure the API key is fetched and available
+        await fetchApiKey();
+
+        const headers = new Headers({
+            'Authorization': `Client-ID ${window.apiKey}`
+        });
+
         //const url = 'https://api.unsplash.com/search/photos?page=${pageNr}&query=${query}';
         const url = `https://api.unsplash.com/search/photos?per_page=15&page=${pageNr}&query=${query}`;
         const response = await fetch(url, {
@@ -133,7 +147,7 @@ function renderImages(data) {
             const imgElement = document.createElement('img');
             //imgElement.src = photo.urls.regular; // Testar
             imgElement.src = photo.urls.small // Thumbnail versionens
-            console.log("Thumbnail src is: ", imgElement.src);
+            //console.log("Thumbnail src is: ", imgElement.src);
             imgElement.modalsrc = photo.urls.regular; // I want to pass this property to the modal
             imgElement.alt = photo.alt_description;
             imgElement.className = "zoom-image fixed-size cursor-pointer m-2 openModal";
@@ -194,7 +208,6 @@ searchBox.addEventListener('keypress', async (event) => {
 
 function modal() {
     document.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
     
     // Get modal element
     var modal = document.getElementById('modal');
@@ -231,7 +244,41 @@ function modal() {
 }
 
 
+document.addEventListener('DOMContentLoaded', async () => {
+    // Wait for the API key to be fetched and stored in window.apiKey
+    await fetchApiKey();
 
-// Calling the getPhoto() function - fetches a random photo
+    // Now we can safely access window.apiKey and set it in the headers
+    const headers = new Headers({
+        'Authorization': `Client-ID ${window.apiKey}`
+    });
+
+    // Example of making a request to Unsplash
+    try {
+        const response = await fetch('https://api.unsplash.com/photos', {
+            method: 'GET',
+            headers: headers
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+        } else {
+            console.error('Error fetching from Unsplash:', response.status, response.statusText);
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
+});
+
+// This function is responsible for fetching the API key and storing it in window.apiKey
+async function fetchApiKey() {
+    if (!window.apiKey) {  // Ensure we're only fetching once
+        const response = await fetch('/api/getApiKey');
+        const data = await response.json();
+        window.apiKey = data.apiKey;  // Store API key globally
+    }
+}
+
+
 getPhoto();
 modal();
